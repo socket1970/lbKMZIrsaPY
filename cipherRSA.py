@@ -69,9 +69,10 @@ def __powerMod(base, exp, modulus):
     return result
 
 
-def encode(m, d, n):
+def encode(m, d, n, encod="32_lw"):
     """
     Кодирование сообщения m шифром RSA
+    :param encod: Кодировка.
     :param m: Исходное сообщение.
     :param d: Открытый ключ d.
     :param n: Открытая часть n.
@@ -79,15 +80,16 @@ def encode(m, d, n):
     """
     # Преобразование из строки в цифры.
     # Функция enc.encoding приводится сначала к str, потом к int
-    m = int("".join(enc.encoding(m, len(m), encod="32_lw")))
+    m = int("".join(enc.encoding(m, len(m), encod=encod)))
 
     e = __powerMod(m, d, n)  # Кодирование сообщения
     return e
 
 
-def decode(e, c, n):
+def decode(e, c, n, encod="32_lw"):
     """
     Декодирование сообщения e шифром RSA.
+    :param encod: Кодировка.
     :param e: Зашифрованное сообщение.
     :param c: Закрытый ключ c.
     :param n: Открытая часть n.
@@ -96,7 +98,7 @@ def decode(e, c, n):
     m_sh = __powerMod(e, c, n)
     m_sh = str(m_sh).split()  # Строка в массив.
 
-    m_sh = enc.decoding(m_sh, encod="32_lw")  # Массив в буквы.
+    m_sh = enc.decoding(m_sh, encod=encod)  # Массив в буквы.
     return m_sh
 
 
